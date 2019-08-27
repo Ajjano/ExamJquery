@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CheckList</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="jquery-1.10.2.js"></script>
+</head>
+<body>
+<div class="checkList">
+    <form class="form">
+        <input type="text" name="input_field" class="input_field" placeholder="Enter the task">
+    </form>
+</div>
+<script>
+    $(document).ready(()=>{
+        $('.input_field').on('keypress',()=>{
+            if(event.keyCode===13){
+                $('.form').append(`<div class="task">
+            <input class="checkbox" type="checkbox">
+            <span class="text_task">${$('.input_field').val()}</span>
+            <button class="delete">X</button>
+        </div>`);
+            }
+        })
+    })
+</script>
+</body>
+</html>

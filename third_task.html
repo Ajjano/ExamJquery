@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+<!--3-->
+
+<div class="third_task">
+    <script>
+        $(document).ready(()=>{
+            let size,timerClock,timerStop;
+            let gameStart;
+            let arrColor=['black', 'red','blue','green','grey','magenta','maroon','lime','tomato','violet','orange'];
+            let arrSize=[];
+            for(let i=12;i<35;i+=2){
+                arrSize.push(`${i}px`);
+            }
+           function drawTable(){
+               gameStart=0;
+                size=prompt('Введите количество ячеек (кратно 9,16,25 и т.д.): ');
+                let arr=[];
+                for(let i=1;i<=parseInt(size);i++){
+                    arr.push(i);
+                }
+                console.log(arr);
+                let j, temp;
+                for(let i=parseInt(size)-1;i>0;i--){
+                    j=Math.floor(Math.random()*(i+1));
+                    temp=arr[j];
+                    arr[j]=arr[i];
+                    arr[i]=temp;
+                }
+                console.log(arr);
+
+                let appendTable='<table class="table">';
+                let count=0;
+                let sizeTable=Math.sqrt(size);
+                for(let i=0;i<sizeTable;i++){
+                    appendTable+='<tr>';
+                    for(let k=0;k<sizeTable;k++){
+                        appendTable+=`<td style="color: ${arrColor[Math.floor((Math.random()*arrColor.length))]}; font-size: ${arrSize[Math.floor(Math.random()*arrSize.length)]}">${arr[count++]}</td>`
+                    }
+                    appendTable+='</tr>';
+                }
+                $('.third_task').html(appendTable);
+
+                timerClock=parseInt(prompt('Введите количество секунд для раунда: '));
+                timerStop=timerClock*1000+1000;
+            }
+
+            $('.newGame').on('click',()=>{
+                drawTable();
+                console.log(` clock ${timerClock}`);
+                console.log(` game ${gameStart}`);
+                console.log(` size ${size}`);
+                console.log(` stop ${timerStop}`);
+            });
+
+
+            $('.startButton').on('click',()=>{
+                let interval=setInterval(()=>{
+                    $('.timer').html(`Времени осталось: ${timerClock--}`);
+                    if(gameStart==size){
+                        $('.info_win').html('Вы выиграли!)');
+                        clearInterval(interval);
+                    }
+                    else if(timerClock==-1){
+                        clearInterval(interval);
+                        $('td').off();
+                        if(gameStart!=size){
+                            $('.info_win').html('Время вышло! Вы проиграли:(');
+                        }
+                    }
+                },1000);
+
+                // setTimeout(()=>{
+                //     clearInterval(interval);
+                //     $('td').off();
+                //     if(gameStart!=size){
+                //         $('.info_win').html('Время вышло! Вы проиграли:(');
+                //     }
+                // },timerStop);
+
+            });
+
+
+            $('td').on('click', ()=>{
+                let target=event.target;
+                if(target.innerText==gameStart+1){
+                    $(target).css('background', 'rgb(115,255,103)');
+                    gameStart++;
+                }
+            })
+        })
+    </script>
+</div>
+<div class="info">
+    <button class="btn newGame">New game</button>
+    <button class="btn startButton">Start</button>
+    <div class="timer"></div>
+    <div class="info_win"></div>
+</div>
+<!--3 end-->
+</body>
+</html>

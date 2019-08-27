@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CheckList</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="tictac_game">
+    <table class="game_field">
+        <tr>
+            <td id="0"></td>
+            <td id="1"></td>
+            <td id="2"></td>
+        </tr>
+        <tr>
+            <td id="3"></td>
+            <td id="4"></td>
+            <td id="5"></td>
+        </tr>
+        <tr>
+            <td id="6"></td>
+            <td id="7"></td>
+            <td id="8"></td>
+        </tr>
+    </table>
+    <div class="ticTac_win"></div>
+</div>
+<script>
+    $(document).ready(()=>{
+        let countGame=0;
+        // let firstArr=new Array(9);
+        // let secondArr=new Array(9);
+        let firstSign='<i class="fa fa-times" aria-hidden="true"></i>',secondSign='<i class="fa fa-circle-o" aria-hidden="true"></i>';
+        $('td').on('click',()=>{
+            let target=event.target;
+            if(countGame%2==0){
+                $(target).html(firstSign);
+                //firstArr[parseInt($(target).attr('id'))]=1;
+            }
+            else{
+                $(target).html(secondSign);
+                //secondArr[parseInt($(target).attr('id'))]=1;
+            }
+            $(target).off();
+            checkWin();
+            countGame++;
+
+        })
+
+        function checkWin() {
+            if(($('#0').html()!=''&&$('#0').html()==$('#1').html()&&$('#1').html()==$('#2').html())||
+                ($('#0').html()!=''&&$('#0').html()==$('#4').html()&&$('#4').html()==$('#8').html())||
+                ($('#3').html()!=''&&$('#3').html()==$('#4').html()&&$('#4').html()==$('#5').html())||
+                ($('#6').html()!=''&&$('#6').html()==$('#7').html()&&$('#7').html()==$('#8').html())||
+                ($('#0').html()!=''&&$('#0').html()==$('#3').html()&&$('#3').html()==$('#6').html())||
+                ($('#1').html()!=''&&$('#1').html()==$('#4').html()&&$('#4').html()==$('#7').html())||
+                ($('#2').html()!=''&&$('#2').html()==$('#5').html()&&$('#5').html()==$('#8').html())||
+                ($('#2').html()!=''&&$('#2').html()==$('#4').html()&&$('#4').html()==$('#6').html())){
+                if(countGame%2==0){
+                    $('.ticTac_win').html('Win: first!!');
+                }
+                else{
+                    $('.ticTac_win').html('Win: second!!');
+                }
+                $('td').off();
+            }
+
+        }
+    })
+</script>
+</body>
+</html>
