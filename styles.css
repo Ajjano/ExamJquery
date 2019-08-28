@@ -118,7 +118,7 @@ td:hover{
 
 .input_field{
     margin: 5px;
-    width: 100px;
+    width: 96%;
 }
 
 /*5*/
@@ -137,4 +137,11 @@ td:hover{
     font-size: 20px;
     font-weight: bold;
     margin: 10px;
+}
+
+.input_field1{
+    width: 80%;
+    border: none;
+    color: gray;
+    font-size: 80%;
 }

@@ -16,13 +16,42 @@
     $(document).ready(()=>{
         $('.input_field').on('keypress',()=>{
             if(event.keyCode===13){
+                event.preventDefault();
                 $('.form').append(`<div class="task">
             <input class="checkbox" type="checkbox">
             <span class="text_task">${$('.input_field').val()}</span>
             <button class="delete">X</button>
         </div>`);
+                $('.input_field').val('');
+            }
+        });
+
+        $('body').on('click','.delete',()=>{
+            let target=event.target;
+            $(target).closest('.task').remove();
+        });
+
+        $('body').on('dblclick', '.text_task',()=>{
+            let target=event.target;
+            if($(target).closest('.checkbox').attr('checked')){
+                $(target).closest('.text_task').replaceWith(`<input class="input_field1" type="text" value="${$(target).closest('.text_task').html()}">`);
             }
         })
+
+        $('body').on('keypress','.input_field1',()=>{
+            if(event.keyCode===13) {
+
+                let target=event.target;
+                $(target).replaceWith(`<span class="text_task">${$(target).val()}</span>`);
+            }
+        })
+        $('body').on('click','.checkbox',()=>{
+            let target=event.target;
+            $(target).attr('checked');
+            $(target).next('.text_task').css('text-decoration','line-through');
+        });
+
+
     })
 </script>
 </body>

@@ -13,6 +13,7 @@
 <div class="third_task">
     <script>
         $(document).ready(()=>{
+            let interval;
             let size,timerClock,timerStop;
             let gameStart;
             let arrColor=['black', 'red','blue','green','grey','magenta','maroon','lime','tomato','violet','orange'];
@@ -21,6 +22,11 @@
                 arrSize.push(`${i}px`);
             }
            function drawTable(){
+               if(interval!=undefined){
+                   clearInterval(interval);
+               }
+               $('.timer').html('');
+               $('.info_win').html('');
                gameStart=0;
                 size=prompt('Введите количество ячеек (кратно 9,16,25 и т.д.): ');
                 let arr=[];
@@ -63,7 +69,7 @@
 
 
             $('.startButton').on('click',()=>{
-                let interval=setInterval(()=>{
+                interval=setInterval(()=>{
                     $('.timer').html(`Времени осталось: ${timerClock--}`);
                     if(gameStart==size){
                         $('.info_win').html('Вы выиграли!)');
@@ -71,12 +77,21 @@
                     }
                     else if(timerClock==-1){
                         clearInterval(interval);
-                        $('td').off();
+                        $('body').off('click', 'td')
                         if(gameStart!=size){
                             $('.info_win').html('Время вышло! Вы проиграли:(');
                         }
                     }
                 },1000);
+
+                $('body').on('click', 'td',()=>{
+                    let target=event.target;
+                    console.log(target);
+                    if(target.innerText==gameStart+1){
+                        $(target).css('background', 'rgb(115,255,103)');
+                        gameStart++;
+                    }
+                })
 
                 // setTimeout(()=>{
                 //     clearInterval(interval);
@@ -89,13 +104,7 @@
             });
 
 
-            $('td').on('click', ()=>{
-                let target=event.target;
-                if(target.innerText==gameStart+1){
-                    $(target).css('background', 'rgb(115,255,103)');
-                    gameStart++;
-                }
-            })
+
         })
     </script>
 </div>
